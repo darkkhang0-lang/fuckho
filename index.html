@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>System Error</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #0078d7; /* Màu xanh chuẩn Windows */
+            color: white;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            overflow: hidden;
+            cursor: none; /* Giấu chuột */
+            user-select: none;
+        }
+        
+        /* Giao diện màn hình xanh lúc đầu */
+        #bsod-screen {
+            padding: 12% 10% 10% 10%;
+            box-sizing: border-box;
+            display: block;
+        }
+        .smiley { font-size: 130px; font-weight: 300; line-height: 1; }
+        .headline { font-size: 28px; margin-top: 25px; line-height: 1.4; max-width: 900px; }
+        .percentage { font-size: 20px; margin-top: 30px; color: rgba(255, 255, 255, 0.9); }
+
+        /* Khung chứa video Rickroll ẩn */
+        #rickroll-container {
+            display: none; /* Ban đầu ẩn đi */
+            width: 100%;
+            height: 100%;
+            background-color: black;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- MÀN HÌNH XANH GIẢ LẬP -->
+    <div id="bsod-screen">
+        <div class="smiley">:(</div>
+        <div class="headline">PC của bạn đã gặp sự cố và cần khởi động lại. Chúng tôi chỉ đang thu thập một số thông tin lỗi, sau đó chúng tôi sẽ tự động khởi động lại cho bạn.</div>
+        <div class="percentage" id="loading-text">0% hoàn thành</div>
+    </div>
+
+    <!-- KHUNG CHỨA VIDEO RICKROLL NHÚNG (BỎ QUA QUẢNG CÁO) -->
+    <div id="rickroll-container">
+        <!-- Sử dụng link embed đặc biệt để tự động chạy ngay khi kích hoạt -->
+        <iframe id="rick-video" src="https://www.youtube.com/embed/dQw4w9WgXcQ?enablejsapi=1&autoplay=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    </div>
+
+    <script>
+        var clicked = false;
+
+        function triggerTroll() {
+            if (clicked) return; // Ngăn kích hoạt nhiều lần
+            clicked = true;
+
+            // 1. Bật chế độ Toàn màn hình
+            var el = document.documentElement;
+            var rfs = el.requestFullscreen || el.webkitRequestFullScreen || el.mozRequestFullScreen || el.msRequestFullScreen;
+            if (rfs) rfs.call(el);
+
+            // 2. Ẩn màn hình xanh và hiện video Rickroll ngay lập tức
+            document.getElementById('bsod-screen').style.display = 'none';
+            document.getElementById('rickroll-container').style.display = 'block';
+            
+            // Đổi tiêu đề trang web thành bài hát luôn
+            document.title = "Rick Astley - Never Gonna Give You Up";
+        }
+
+        // Chỉ cần bạn bè click hoặc bấm phím bất kỳ, cú lừa sẽ kích hoạt
+        document.addEventListener('click', triggerTroll);
+        document.addEventListener('keydown', triggerTroll);
+    </script>
+</body>
+</html>
